@@ -1,0 +1,110 @@
+<div class="container">
+
+    <form role="form" class="form-horizontal">
+        <fieldset>
+            <div id="legend" class="">
+                <legend class="">发布信息</legend>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">消息类型</label>
+                <div class="col-md-6 col-sm-10">
+                    <!-- Inline Radios -->
+                    <label class="radio-inline">
+                        <input ng-model="businessForm.businessTypeCode" type="radio" value="S" name="group" checked="checked">
+                        供
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="businessForm.businessTypeCode" type="radio" value="B" name="group">
+                        求
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">游戏名称</label>
+                <div class="col-md-6 col-sm-10">
+                    <input ng-model="businessForm.gameName" type="text" placeholder="必填项" class="form-control">
+                    <p class="help-block">请填写官方名称，有助于快速找到本信息</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">游戏类型</label>
+                <div class="col-md-6 col-sm-10">
+                    <select  ng-model="businessForm.gameTypeCode" class="form-control" ng-options="o.code as o.name for o in gameType">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">游戏平台</label>
+                <div class="col-md-6 col-sm-10">
+                    <select ng-model="businessForm.platformCode" class="form-control" ng-options="o.code as o.name for o in platform">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">游戏版本</label>
+                <div class="col-md-6 col-sm-10">
+                    <select ng-model="businessForm.editionCode" class="form-control" ng-options="o.code as o.name for o in edition">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">价格</label>
+                <div class="col-md-6 col-sm-10">
+                    <input ng-model="businessForm.price" type="text" placeholder="必填" class="form-control">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">成色</label>
+                <div class="col-md-6 col-sm-10">
+                    <select ng-model="businessForm.qualityCode" class="form-control" ng-options="o.code as o.name for o in quality">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">交易方式</label>
+                <div class="col-md-6 col-sm-10">
+                    <select ng-model="businessForm.tradingWayCode" class="form-control" ng-options="o.code as o.name for o in tradingWay">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">所在地</label>
+                <div class="col-md-6 col-sm-10">
+                    <input ng-model="businessForm.location" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2  control-label">说明</label>
+                <div class="col-md-6 col-sm-10">
+                    <textarea ng-model="businessForm.description" type="" class="form-control"> </textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="center" >
+                    <input ng-click="add()" type="submit" class="btn btn-default" value="发布"/>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <span>{{businessForm}}</span>
+
+</div>

@@ -1,0 +1,47 @@
+input.ng-invalid {
+    border: 1px solid #ff6d20;
+}
+
+input.ng-invalid-required {
+    border: 1px solid #ff6d20;
+}
+input.ng-valid {
+    border: 1px solid #8bc703;
+}
+
+input.ng-pristine {
+    border: 1px solid #8bc703;
+}
+
+.t-invisible{
+    display: none;
+}
+
+.ng-hide{
+    display: none;
+}
+
+.checkinfo{
+    color: #ff0000;
+    padding-right: 5px;
+}
+
+.checkinfo span{
+    padding-left: 2px;
+    font-size: 12px;
+}
+
+.form-item-full{
+    width: 100%;
+}
+
+.form-item-label{
+    width: 80px;
+}
+
+.center {
+    width: auto;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1.0, user-scalable=0">
+    <title>至日时更</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+<body ng-app="mainApp">
+
+<!-- webbot bot="include" u-include="/page/error.html" TAG="BODY" -->
+<div  ng-controller="HomeController" >
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-right">
+                <div ng-show="!loginInfo ? false : !loginInfo.hasLogin" class="ng-hide">
+                    <input type="button" class="btn-link navbar-brand" ng-click="toLogin()" value="登陆">
+                    <input type="button" class="btn-link navbar-brand" ng-click="toRegister()" value="注册">
+                </div>
+                <div ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
+                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}}"/>
+                    <input class="btn btn-link navbar-brand" type="button" value="注销" ng-click="toLogoff()" />
+                </div>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/#/">HOME</a>
+                    <li><a href="#"><span>Link</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div ng-view></div>
+    </div>
+
+</div>
+
+<script src="/js/jquery-2.1.3.min.js"></script>
+<script src="/js/jquery.cookie.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/angular.js"></script>
+<script src="/js/angular-route.js"></script>
+<script src="/js/tdct/Status.js"></script>
+<script src="/js/tdct/main.js"></script>
+<script src="/js/tdct/services.js"></script>
+<script src="/js/tdct/controllers.js"></script>
+</body>
+</html>
