@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 var routes = require('./routes/index');
 var template = require('./routes/template');
@@ -12,6 +14,12 @@ var login = require('./routes/login');
 var base = require('./routes/base');
 var register = require('./routes/register');
 
+var settings = require('./settings');
+var options = {
+  "host": settings.redis_host,
+  "port": settings.redis_port,
+  "ttl": settings.redis_session_timeout,
+};
 
 var app = express();
 
@@ -20,13 +28,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  store: new RedisStore(options),
+  secret: 'funky soya'
+}));
 
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('session is valid')) // handle error
+  }
+  next() // otherwise continue
+})
 app.use('/ajax/login', login);
 app.use('/ajax/register', register);
 app.use('/ajax/base', base);

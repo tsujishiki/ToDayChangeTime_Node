@@ -7,6 +7,6 @@ module.exports = {
     mongodb_reconnect  : true,
 
     redis_host : 'localhost',
-    redis_port : '6379'
-
+    redis_port : '6379',
+    redis_session_timeout : 60 * 60,   //Session的有效期为1小时
 };
