@@ -9,10 +9,11 @@ var RedisStore = require('connect-redis')(session);
 
 var routes = require('./routes/index');
 var template = require('./routes/template');
-var users = require('./routes/users');
-var login = require('./routes/login');
+//var users = require('./routes/users');
 var base = require('./routes/base');
+var login = require('./routes/login');
 var register = require('./routes/register');
+var business = require('./routes/business');
 
 var settings = require('./settings');
 var options = {
@@ -47,9 +48,10 @@ app.use(function (req, res, next) {
 })
 app.use('/ajax/login', login);
 app.use('/ajax/register', register);
+app.use('/ajax/business', business);
 app.use('/ajax/base', base);
 app.use('/templates', template);
-app.use('/users', users);
+//app.use('/users', users);
 app.use('/', routes);
 
 // catch 404 and forward to error handler

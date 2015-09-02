@@ -24,12 +24,12 @@
         <div class="container-fluid">
             <div class="navbar-header navbar-right">
                 <div ng-show="!loginInfo ? false : !loginInfo.hasLogin" class="ng-hide">
-                    <input type="button" class="btn-link navbar-brand" ng-click="toLogin()" value="登陆">
-                    <input type="button" class="btn-link navbar-brand" ng-click="toRegister()" value="注册">
+                    <input type="button" class="btn-link navbar-brand" ng-click="toLogin()" value="Sign In">
+                    <input type="button" class="btn-link navbar-brand" ng-click="toRegister()" value="Sign Up">
                 </div>
                 <div ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
-                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}}"/>
-                    <input class="btn btn-link navbar-brand" type="button" value="注销" ng-click="toLogoff()" />
+                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}} |"/>
+                    <input class="btn btn-link navbar-brand" type="button" value="Sign Out" ng-click="toLogoff()" />
                 </div>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -42,7 +42,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/#/">HOME</a>
-                    <li><a href="#"><span>Link</span></a></li>
+                    <li><a href="/createBusiness"><span>POST</span></a></li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>

@@ -2,17 +2,43 @@ var express = require('express');
 var crypto = require('crypto');
 var uuid = require('node-uuid');
 var Status = require('../constant/Status');
+var System = require('../constant/System');
 var ReturnBody = require('../modules/ReturnBody');
 var userSer = require('../modules/user');
 
 var router = express.Router();
 
 router.get('/autoLogin', function(req, res) {
-    res.send({status:Status.FAILED});
+    var user = req.session[System.USER];
+    var returnBody = new ReturnBody();
+    if(user != null){
+        returnBody.status = Status.SUCCESS;
+        returnBody.data = user.nickName;
+    }else {
+        var token = req.cookies.token;
+        if (token != null) {
+            userSer.validUser({token: token}).then(function (data) {
+                if (data != null) {
+                    req.session[System.USER] = data;
+                    returnBody.status = Status.SUCCESS;
+                    returnBody.data = data.nickName;
+                } else {
+                    returnBody.status = Status.FAILED;
+                }
+            });
+        }else{
+            returnBody.status = Status.FAILED;
+        }
+    }
+    res.json(returnBody);
+
 });
 
 router.get('/logoff', function(req, res) {
-    res.send({status:Status.SUCCESS});
+    delete req.session[System.USER];
+    var returnBody = new ReturnBody();
+    returnBody.status = Status.SUCCESS;
+    res.json(returnBody);
 });
 
 router.post('/', function(req, res) {
@@ -31,17 +57,16 @@ router.post('/', function(req, res) {
                 returnBody.msg = "Success";
                 returnBody.redirectUrl= "/";
                 var backData = {};
-
-                backData.token = uuid.v1();
+                var token = uuid.v1();
+                backData.token = token;
                 backData.nickName = data.nickName;
                 backData.userName = data.userName;
 
                 returnBody.data = backData;
-                //
-                //userSer.updateToken(user.getUserId(), token);
-                //
-                //HttpSession session = request.getSession();
-                //session.setAttribute(Context.USER, user);
+
+
+                req.session[System.USER] = data;
+                userSer.updateToken(data.userid,token);
             }
         }else{
             returnBody.status = Status.FAILED;
