@@ -25,10 +25,12 @@
             <div class="navbar-header navbar-right">
                 <div ng-show="!loginInfo ? false : !loginInfo.hasLogin" class="ng-hide">
                     <input type="button" class="btn-link navbar-brand" ng-click="toLogin()" value="Sign In">
+                    <span class="btn-link navbar-brand">|</span>
                     <input type="button" class="btn-link navbar-brand" ng-click="toRegister()" value="Sign Up">
                 </div>
                 <div ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
-                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}} |"/>
+                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}}"/>
+                    <span class="btn-link navbar-brand">|</span>
                     <input class="btn btn-link navbar-brand" type="button" value="Sign Out" ng-click="toLogoff()" />
                 </div>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">

@@ -9,28 +9,23 @@ var userSer = require('../modules/user');
 var router = express.Router();
 
 router.get('/autoLogin', function(req, res) {
-    var user = req.session[System.USER];
     var returnBody = new ReturnBody();
-    if(user != null){
-        returnBody.status = Status.SUCCESS;
-        returnBody.data = user.nickName;
-    }else {
-        var token = req.cookies.token;
-        if (token != null) {
-            userSer.validUser({token: token}).then(function (data) {
-                if (data != null) {
-                    req.session[System.USER] = data;
-                    returnBody.status = Status.SUCCESS;
-                    returnBody.data = data.nickName;
-                } else {
-                    returnBody.status = Status.FAILED;
-                }
-            });
-        }else{
-            returnBody.status = Status.FAILED;
-        }
+    var token = req.cookies.token;
+    if (token != null) {
+        userSer.validUser({token: token}).then(function (data) {
+            if (data != null) {
+                req.session[System.USER] = data;
+                returnBody.status = Status.SUCCESS;
+                returnBody.data = data.nickName;
+            } else {
+                returnBody.status = Status.FAILED;
+            }
+            res.json(returnBody);
+        });
+    }else{
+        returnBody.status = Status.FAILED;
+        res.json(returnBody);
     }
-    res.json(returnBody);
 
 });
 
