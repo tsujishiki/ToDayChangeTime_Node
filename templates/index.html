@@ -20,27 +20,19 @@
 
 <!-- webbot bot="include" u-include="/page/error.html" TAG="BODY" -->
 <div  ng-controller="HomeController" >
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header navbar-right">
-                <div ng-show="!loginInfo ? false : !loginInfo.hasLogin" class="ng-hide">
-                    <input type="button" class="btn-link navbar-brand" ng-click="toLogin()" value="Sign In">
-                    <span class="btn-link navbar-brand">|</span>
-                    <input type="button" class="btn-link navbar-brand" ng-click="toRegister()" value="Sign Up">
-                </div>
-                <div ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
-                    <input class="btn btn-link navbar-brand" type="button" value="{{loginInfo.info}}"/>
-                    <span class="btn-link navbar-brand">|</span>
-                    <input class="btn btn-link navbar-brand" type="button" value="Sign Out" ng-click="toLogoff()" />
-                </div>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a class="navbar-brand" href="#">
+                    <img width="25" height="25" alt="Brand" class="img-rounded" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAJQAlAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAAoACgBAREA/8QAGgABAAIDAQAAAAAAAAAAAAAAAAQHBQYJCP/EADIQAAAFAgMDCgcBAAAAAAAAAAECAwQFAAYHERIhV7QIFxg3UXOTldLUCRMUMTI4dmH/2gAIAQEAAD8A6SXZizZdhSKTC47piYN8qkC6bd+7IkcyYiJQMBTCAiGZTBn2gNYbpIYV7wrb8yS9VOkhhXvCtvzJL1U6SGFe8K2/MkvVW6QNwRl1Q7WWhn7eVjHRdaDxooCiSpcxDMpgzAQzAQ2dleDvia39dWG0ZcExZs5JW9MfQQaP1kSudFb5ZnUlqLqKIDkOQZh/gVg/hAYwYg4qrYrlvu65y5wYlihZhNO1F/kaxea9GsR06tBM8vvpDsrpBkFMgqt+Tx1Qw3fPOKWpH/sZP/ysdxb6rJpSq25PHVDDd884pakf+xk//Kx3FvqsmlKrbk8dUMN3zzilql3XhSncd1BcLO5p225IzJNgqaIUQAqyRDnOQDAqiptAyp9oZfltz2VE5n5XejeviMPaU5n5XejeviMPaU5n5XejeviMPaVtFj2c0sK1mECxXcOGzMpgBZ2cDKqCY5jmMYSlKAiJjGHYABt+1f/Z">
+                </a>
             </div>
-
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/#/">HOME</a>
@@ -49,6 +41,16 @@
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
                 </ul>
+
+                <ul class="nav navbar-nav navbar-right" ng-show="!loginInfo ? false : !loginInfo.hasLogin" class="ng-hide">
+                    <li><a href="#" ng-click="toLogin()" ng->Sign In</a></li>
+                    <li><a href="#" ng-click="toRegister()">Sign Up</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
+                    <li><p class="navbar-text">{{loginInfo.info}}</p></li>
+                    <li><a href="#" ng-click="toLogoff()">Sign Out</a></li>
+                </ul>
+
             </div>
         </div>
     </nav>
@@ -56,8 +58,17 @@
     <div class="container">
         <div ng-view></div>
     </div>
-
 </div>
+
+<footer class="footer">
+    <div class="container">
+        <row>
+            <div class="col-md-6 col-md-push-3 copyright text-center">
+                <h5>Designed by ...</h5>
+            </div>
+        </row>
+    </div>
+</footer>
 
 <script src="/js/jquery-2.1.3.min.js"></script>
 <script src="/js/jquery.cookie.min.js"></script>
