@@ -122,7 +122,7 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
         $event.target.src = '/ajax/base/captcha-image?' + Math.floor(Math.random()*100);
     };
 }])
-.controller('HomeController',['$scope','$location','LoginService',function($scope,$location,LoginService) {
+.controller('HomeController',['$scope','$rootScope','$location','LoginService',function($scope,$rootScope,$location,LoginService) {
     var loginInfo = LoginService.getLoginInfo();
 
     LoginService.autoLogin().then(function(data){

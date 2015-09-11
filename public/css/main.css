@@ -34,9 +34,14 @@ input.ng-pristine {
     display: none;
 }
 
+.ifo {
+    height: 20px;
+}
+
 .checkinfo{
     color: #ff0000;
     padding-right: 5px;
+    display: inline;
 }
 
 .checkinfo span{
@@ -67,4 +72,89 @@ input.ng-pristine {
 
 .copyright h5 {
     color: #fff;
+}
+
+.sign-in h1,.sign-up h1{
+    font-size: 60px;
+    margin: 30px 0px;
+}
+
+.sign-in .form-group{
+    margin-bottom: 30px;
+}
+
+.sign-up .form-group{
+    margin-bottom: 15px;
+}
+
+.sign-in label{
+    margin-bottom: 15px;
+}
+
+.padding-md {
+    padding: 65px 0px;
+}
+
+/*==============================================*/
+#loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 3000;
+    transition: opacity 300ms ease-in-out;
+    opacity: 1;
+}
+
+
+#loader.fadeOut {
+    opacity: 0
+}
+
+@-webkit-keyframes three-quarters-loader {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes three-quarters-loader {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.three-quarters-loader:not(:required) {
+    -webkit-animation: three-quarters-loader 1250ms infinite linear;
+    animation: three-quarters-loader 1250ms infinite linear;
+    border: 12px solid #1f7edd;
+    border-right-color: transparent;
+    border-radius: 64px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 128px;
+    height: 128px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3001
 }

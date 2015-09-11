@@ -17,7 +17,7 @@
 
 </head>
 <body ng-app="mainApp">
-
+<!--<loader id="loader" style="display: none;"><div class="three-quarters-loader"></div></loader>-->
 <!-- webbot bot="include" u-include="/page/error.html" TAG="BODY" -->
 <div  ng-controller="HomeController" >
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -47,7 +47,7 @@
                     <li><a href="#" ng-click="toRegister()">Sign Up</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ng-show="!loginInfo ? false : loginInfo.hasLogin" class="ng-hide">
-                    <li><p class="navbar-text">{{loginInfo.info}}</p></li>
+                    <li><a href="#">{{loginInfo.info}}</a></li>
                     <li><a href="#" ng-click="toLogoff()">Sign Out</a></li>
                 </ul>
 
@@ -78,6 +78,7 @@
 <script src="/js/tdct/Status.js"></script>
 <script src="/js/tdct/main.js"></script>
 <script src="/js/tdct/services.js"></script>
+<script src="/js/tdct/directive.js"></script>
 <script src="/js/tdct/controllers.js"></script>
 </body>
 </html>

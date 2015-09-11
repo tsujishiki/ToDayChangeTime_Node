@@ -54,6 +54,10 @@ var app = angular.module('mainApp', ['ngRoute'])
             templateUrl: 'templates/login',
             controller: 'RouteLoginCtl'
         })
+        .when('/forgot', {
+            templateUrl: 'templates/forgot',
+            controller: ''
+        })
         .when('/error', {
             templateUrl: 'templates/error',
             controller: 'RouteErrorCtl'

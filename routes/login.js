@@ -44,7 +44,7 @@ router.post('/', function(req, res) {
     userSer.validUser(user_userName).then(function(data){
         if(data != null){
             var md5 = crypto.createHash('md5');
-            if(!data.password == md5.update(user.password).digest('hex')){
+            if(! (data.password == md5.update(user.password).digest('hex'))){
                 returnBody.status = Status.FAILED;
                 returnBody.msg = "密码错误！";
             }else{
