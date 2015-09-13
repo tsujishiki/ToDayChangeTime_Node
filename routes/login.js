@@ -2,8 +2,7 @@ var express = require('express');
 var crypto = require('crypto');
 var uuid = require('node-uuid');
 
-var Status = require('../constant/Status');
-var SYS = require('../constant/SystemParameters');
+var Constant = require('../constant/Constant');
 var ReturnBody = require('../modules/ReturnBody');
 var TUser = require('../modules/user');
 var Mail = require('../modules/mail');
@@ -20,29 +19,29 @@ router.get('/autoLogin', function(req, res) {
         TUser.findOne({token: token},function (error,data) {
             if(!error) {
                 if (data != null) {
-                    req.session[SYS.USER] = data;
-                    returnBody.status = Status.SUCCESS;
+                    req.session[Constant.Session_Key.USER] = data;
+                    returnBody.status = Constant.Status.SUCCESS;
                     returnBody.data = data.nickName;
                 } else {
-                    returnBody.status = Status.FAILED;
+                    returnBody.status = Constant.Status.FAILED;
                 }
             }else{
-                returnBody.status = Status.FAILED;
+                returnBody.status = Constant.Status.FAILED;
                 returnBody.data = error;
             }
             res.json(returnBody);
         });
     }else{
-        returnBody.status = Status.FAILED;
+        returnBody.status = Constant.Status.FAILED;
         res.json(returnBody);
     }
 
 });
 
 router.get('/logoff', function(req, res) {
-    delete req.session[System.USER];
+    delete req.session[Constant.Session_Key.USER];
     var returnBody = new ReturnBody();
-    returnBody.status = Status.SUCCESS;
+    returnBody.status = Constant.Status.SUCCESS;
     res.json(returnBody);
 });
 
@@ -55,12 +54,12 @@ router.post('/', function(req, res) {
         if(data != null){
             var md5 = crypto.createHash('md5');
             if(! (data.password == md5.update(user.password).digest('hex'))){
-                returnBody.status = Status.FAILED;
+                returnBody.status = Constant.Status.FAILED;
                 returnBody.msg = "密码错误！";
-            }else{
-                returnBody.status = Status.SUCCESS;
+            }else {
+                returnBody.status = Constant.Status.SUCCESS;
                 returnBody.msg = "Success";
-                returnBody.redirectUrl= "/";
+                returnBody.redirectUrl = "/";
                 var backData = {};
                 var token = uuid.v1();
                 backData.token = token;
@@ -69,12 +68,15 @@ router.post('/', function(req, res) {
 
                 returnBody.data = backData;
 
-
-                req.session[System.USER] = data;
-                TUser.update({userid:data.userid},{$set:{token:token}});
+                req.session[Constant.Session_Key.USER] = data;
+                TUser.update({userid: data.userid}, {$set: {token: token}}, function (error) {
+                    if (error) {
+                        console.log(error);
+                    }
+                });
             }
         }else{
-            returnBody.status = Status.FAILED;
+            returnBody.status = Constant.Status.FAILED;
             returnBody.msg = "邮箱不存在！";
         }
 
@@ -97,15 +99,15 @@ router.post('/retrieve',function(req, res){
 
             Mail.sendRestPWMail(user,newLink,function(error){
                 if(error){
-                    returnBody.status = Status.FAILED;
+                    returnBody.status = Constant.Status.FAILED;
                     returnBody.msg = '数据处理出错';
                 }else{
-                    returnBody.status = Status.SUCCESS;
+                    returnBody.status = Constant.Status.SUCCESS;
                 }
                 res.json(returnBody);
             })
         }else{
-            returnBody.status = Status.FAILED;
+            returnBody.status = Constant.Status.FAILED;
             returnBody.msg = '邮箱填写不正确，无对应用户';
             res.json(returnBody);
         }

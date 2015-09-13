@@ -3,7 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bin/www" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/constant/Status.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/constant/Constant.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/connector/mongo.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/user.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/js/tdct/Status.js" charset="UTF-8" />

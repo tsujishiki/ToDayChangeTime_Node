@@ -57,7 +57,7 @@ app.factory('BaseDataService',['$q','$http',function($q,$http){
                 } else{
                     loginInfo.hasLogin = false;
                     loginInfo.info = '';
-                    $.cookie('token','',{expires: -1});
+                    //$.cookie('token','',{expires: -1});
                 }
                 deferred.resolve(loginInfo);
             });

@@ -6,7 +6,7 @@ var router = express.Router();
 
 var crypto = require('crypto');
 
-var Status = require('../constant/Status');
+var Constant = require('../constant/Constant');
 var TUser = require('../modules/user');
 var ReturnBody = require('../modules/ReturnBody');
 
@@ -32,18 +32,18 @@ router.post('/', function(req, res) {
 
                     TUser.create(user,function(error,data){
                         if(data){
-                            returnBody.status = Status.DEFER_MESSAGE;
+                            returnBody.status = Constant.Status.DEFER_MESSAGE;
                             returnBody.msg = "注册成功";
                             res.json(returnBody);
                         }
                     });
                 }else{
-                    returnBody.status = Status.NICKNAME_DUPLICATE;
+                    returnBody.status = Constant.Status.NICKNAME_DUPLICATE;
                     res.json(returnBody);
                 }
             });
         }else{
-            returnBody.status = Status.USERNAME_DUPLICATE;
+            returnBody.status = Constant.Status.USERNAME_DUPLICATE;
             res.json(returnBody);
         }
     })

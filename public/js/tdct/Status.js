@@ -1,8 +1,7 @@
 /**
  * Created by FunkySoya on 2015/4/28.
  */
-var Status = (function() {
-    var constant = {
+var Status = {
         SUCCESS : 3001,
         FAILED : 3002,
         USERNAME_DUPLICATE : 3003,
@@ -13,6 +12,4 @@ var Status = (function() {
         INVALIDATE : 3008,
         REDIRECT : 3009
 
-    };
-    return constant;
-})();
+}

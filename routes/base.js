@@ -7,7 +7,7 @@ var express = require('express');
 var util = require('util');
 var redis = require('../modules/connector/redis');
 var ReturnBody = require('../modules/ReturnBody');
-var Status = require('../constant/Status');
+var Constant = require('../constant/Constant');
 //var ccap = require('ccap');
 
 var router = express.Router();
@@ -21,14 +21,6 @@ router.get('/captcha-image', function(req, res) {
     response.end(buf);
     console.log(txt);
 });*/
-
-router.get('/captcha-image', function(req, res) {
-    var ary = ccap.get();
-    var txt = ary[0];
-    var buf = ary[1];
-    res.end(buf);
-    console.log(txt);
-});
 
 /**
  * 字典基础服务
@@ -46,9 +38,9 @@ router.get('/baseData/:type',function(req,res){
                 dicts.push(dict);
             }
             retrunBody.data = dicts;
-            retrunBody.status = Status.SUCCESS;
+            retrunBody.status = Constant.Status.SUCCESS;
         }else{
-            retrunBody.status = Status.FAILED;
+            retrunBody.status = Constant.Status.FAILED;
             retrunBody.msg = '出错了!';
         }
         res.json(retrunBody);

@@ -4,8 +4,7 @@
 var express = require('express');
 var uuid = require('node-uuid');
 
-var Status = require('../constant/Status');
-var SYS = require('../constant/SystemParameters');
+var Constant = require('../constant/Constant');
 var ReturnBody = require('../modules/ReturnBody');
 var TBusiness = require('../modules/business');
 
@@ -13,7 +12,7 @@ var router = express.Router();
 
 router.post('/', function(req, res) {
     var business = req.body;
-    var user = req.session[SYS.USER];
+    var user = req.session[Constant.Session_Key.USER];
     var returnBody = new ReturnBody();
 
     business.businessid = uuid.v1();
@@ -22,10 +21,10 @@ router.post('/', function(req, res) {
 
     TBusiness.create(business,function(error,data){
         if(data){
-            returnBody.status = Status.REDIRECT;
+            returnBody.status = Constant.Status.REDIRECT;
             returnBody.redirectUrl = '/';
         }else{
-            returnBody.status = Status.FAILED;
+            returnBody.status = Constant.Status.FAILED;
             returnBody.msg = '出错了！';
         }
         res.json(returnBody);
