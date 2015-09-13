@@ -45,6 +45,7 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
     $scope.deferMsg = deferMsg;
 }])
 .controller('RouteLoginCtl',['$scope','$location','LoginService',function($scope,$location,LoginService){
+    LoginService.getLoginInfo().loginerror = false;
     var form = {};
     $scope.form = form;
 
@@ -57,6 +58,29 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
             })
         }else{
             angular.forEach($scope.loginForm,function(e){
+                if(typeof(e) == 'object' && typeof(e.$dirty) == 'boolean'){
+                    e.$dirty = true;
+                }
+            });
+        }
+    };
+}])
+.controller('RouteForgotCtl',['$scope','LoginService',function($scope,LoginService){
+    var info = {};
+    info.sending = false;
+    info.success = false;
+    info.error = false;
+    $scope.info = info;
+
+    $scope.retrieve = function(isValid){
+        if(isValid) {
+            info.sending = true;
+            LoginService.retrieve($scope.form).then(function(data){
+                data.sending = false;
+                $scope.info = data;
+            })
+        }else{
+            angular.forEach($scope.retrieveForm,function(e){
                 if(typeof(e) == 'object' && typeof(e.$dirty) == 'boolean'){
                     e.$dirty = true;
                 }

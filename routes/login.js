@@ -1,10 +1,15 @@
 var express = require('express');
 var crypto = require('crypto');
 var uuid = require('node-uuid');
+
 var Status = require('../constant/Status');
-var System = require('../constant/System');
+var SYS = require('../constant/SystemParameters');
 var ReturnBody = require('../modules/ReturnBody');
-var userSer = require('../modules/user');
+var TUser = require('../modules/user');
+var Mail = require('../modules/mail');
+var redis = require('../modules/connector/redis');
+var System = require('../modules/system');
+var settings = require('../settings');
 
 var router = express.Router();
 
@@ -12,13 +17,18 @@ router.get('/autoLogin', function(req, res) {
     var returnBody = new ReturnBody();
     var token = req.cookies.token;
     if (token != null) {
-        userSer.validUser({token: token}).then(function (data) {
-            if (data != null) {
-                req.session[System.USER] = data;
-                returnBody.status = Status.SUCCESS;
-                returnBody.data = data.nickName;
-            } else {
+        TUser.findOne({token: token},function (error,data) {
+            if(!error) {
+                if (data != null) {
+                    req.session[SYS.USER] = data;
+                    returnBody.status = Status.SUCCESS;
+                    returnBody.data = data.nickName;
+                } else {
+                    returnBody.status = Status.FAILED;
+                }
+            }else{
                 returnBody.status = Status.FAILED;
+                returnBody.data = error;
             }
             res.json(returnBody);
         });
@@ -41,7 +51,7 @@ router.post('/', function(req, res) {
     var returnBody = new ReturnBody();
     var user_userName = {"userName":user.userName};
 
-    userSer.validUser(user_userName).then(function(data){
+    TUser.findOne(user_userName,function(error,data){
         if(data != null){
             var md5 = crypto.createHash('md5');
             if(! (data.password == md5.update(user.password).digest('hex'))){
@@ -61,16 +71,45 @@ router.post('/', function(req, res) {
 
 
                 req.session[System.USER] = data;
-                userSer.updateToken(data.userid,token);
+                TUser.update({userid:data.userid},{$set:{token:token}});
             }
         }else{
             returnBody.status = Status.FAILED;
-            returnBody.msg = "用户名不存在！";
+            returnBody.msg = "邮箱不存在！";
         }
 
         res.json(returnBody);
     });
 
+});
+
+router.post('/retrieve',function(req, res){
+    var user = req.body;
+    var returnBody = new ReturnBody();
+    var user_userName = {"userName":user.userName};
+    TUser.findOne(user_userName,function(error,data) {
+        if (data != null) {
+            var oldLink = data.password +'$'+ data.userName +'$'+ settings.app_secret_key;
+            var newLink = System.encrypt(oldLink,settings.app_secret_key);
+
+            redis.set(settings.mail_redis_prefix + user.userName,newLink,redis.print);
+            redis.expire(settings.mail_redis_prefix + user.userName,settings.mail_expire);
+
+            Mail.sendRestPWMail(user,newLink,function(error){
+                if(error){
+                    returnBody.status = Status.FAILED;
+                    returnBody.msg = '数据处理出错';
+                }else{
+                    returnBody.status = Status.SUCCESS;
+                }
+                res.json(returnBody);
+            })
+        }else{
+            returnBody.status = Status.FAILED;
+            returnBody.msg = '邮箱填写不正确，无对应用户';
+            res.json(returnBody);
+        }
+    });
 });
 
 module.exports = router;

@@ -1,29 +1,32 @@
 <section class="sign-in padding-md">
     <div class="container">
-        <div class="col-md-8 col-md-push-2">
+        <div class="col-md-8 col-md-push-2" ng-show="!info.sendSuccess">
             <h1 class="text-center">Retrieve password</h1>
-            <form role="form" name="loginForm" id="loginForm" ng-submit="login(loginForm.$valid)" class="form-horizontal" novalidate>
+            <form role="form" name="retrieveForm" id="retrieveForm" ng-submit="retrieve(retrieveForm.$valid)" class="form-horizontal" novalidate>
                 <div class="form-group has-feedback">
                     <label for="userName">邮箱</label>
                     <div>
                         <input ng-bind="form.userName" class="form-control input-lg" id="userName" name="userName" ng-model="form.userName" type="email" required placeholder="E-MAIL"/>
                     </div>
+                </div>
+                <div class="form-group has-feedback mg-b-5">
                     <div class="ifo">
-                        <div ng-show="!loginForm.$valid" class="pull-right">
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.required"><span>请输入邮箱</span></span>
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.email"><span>邮箱格式不正确</span></span>
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.password.$dirty && loginForm.password.$error.required"><span>请输入密码</span></span>
-                            <!--<span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.kaptcha.$dirty && loginForm.kaptcha.$error.required"><span>请输入验证码</span></span>-->
+                        <div ng-show="!retrieveForm.$valid" class="pull-right">
+                            <span class="checkinfo" ng-show="retrieveForm.userName.$dirty && retrieveForm.userName.$error.required"><span>请输入邮箱</span></span>
+                            <span class="checkinfo" ng-show="retrieveForm.userName.$dirty && retrieveForm.userName.$error.email"><span>邮箱格式不正确</span></span>
                         </div>
-                        <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginInfo.loginerror"><span>{{loginInfo.loginerroinfo}}</span></span>
+                        <span class="checkinfo pull-right" ng-show="info.error"><span>{{info.errorinfo}}</span></span>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ng-disabled="retrieveForm.$invalid || info.sending">RETRIEVE PASSWORD</button>
+                    <a class="btn btn-link" href="/login">Sign in</a>
+                    <a class="btn btn-link" href="/register">Sign up</a>
+                </div>
             </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="" >RETRIEVE PASSWORD</button>
-                <a class="btn btn-link" href="/login">Sign in</a>
-                <a class="btn btn-link" href="/register">Sign up</a>
-            </div>
+        </div>
+        <div class="col-md-8 col-md-push-2" ng-show="info.sendSuccess">
+            <h1 class="send-succ">邮件发送成功，请至邮箱确认并重新设置密码！</h1>
         </div>
     </div>
 </section>

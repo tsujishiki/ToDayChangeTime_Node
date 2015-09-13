@@ -56,7 +56,7 @@ var app = angular.module('mainApp', ['ngRoute'])
         })
         .when('/forgot', {
             templateUrl: 'templates/forgot',
-            controller: ''
+            controller: 'RouteForgotCtl'
         })
         .when('/error', {
             templateUrl: 'templates/error',
@@ -66,7 +66,7 @@ var app = angular.module('mainApp', ['ngRoute'])
             templateUrl: 'templates/deferMsg',
             controller: 'RouteDeferMsgCtl'
         })
-        .when('/createBusiness', {
+        .when('/business', {
             templateUrl: 'templates/business/newBusiness',
             controller: 'RouteNewBusinessCtl',
             needPermission: true

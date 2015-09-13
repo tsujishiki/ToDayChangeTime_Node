@@ -63,6 +63,21 @@ app.factory('BaseDataService',['$q','$http',function($q,$http){
             });
             return deferred.promise;
         },
+        retrieve:function(form){
+            var deferred = $q.defer();
+            var info = {};
+            $http.post('/ajax/login/retrieve',form).success(function(obj){
+                if(obj.status==Status.SUCCESS) {
+                    info.sendSuccess = true;
+                }else{
+                    info.sendSuccess = false;
+                    info.error = true;
+                    info.errorinfo = obj.msg;
+                }
+                deferred.resolve(info);
+            });
+            return deferred.promise;
+        },
         getLoginInfo:function(){
             return loginInfo;
         }

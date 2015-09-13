@@ -13,25 +13,22 @@
                     <label for="password">密码</label>
                     <input ng-bind="form.password" class="form-control input-lg" id="password" name="password" type="password" ng-model="form.password" required placeholder="PASSWORD"/>
                 </div>
-                <div class="form-group  has-feedback">
-                <!--<label for="kaptcha">验证码</label>-->
-                <!--<input class="form-control " type="text" id="kaptcha" name="kaptcha" ng-model="form.kaptcha" minlength="4" maxlength="4" required/>-->
-                <!--<img ng-src="/ajax/captcha-image" ng-click = "changeCaptcha($event)" title="看不清，点击换一张" height="32"  />-->
-                <!--<br>-->
-                    <input type="checkbox" ng-model="form.isRemember">记住密码
+                <div class="form-group has-feedback mg-b-5  ">
+                    <label class="checkbox-inline">
+                        <input class="pull-left" type="checkbox" ng-model="form.isRemember"><div class="pull-left"> 记住密码</div>
+                    </label>
                     <div class="ifo">
                         <div ng-show="!loginForm.$valid" class="pull-right">
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.required"><span>请输入邮箱</span></span>
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.email"><span>邮箱格式不正确</span></span>
-                            <span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.password.$dirty && loginForm.password.$error.required"><span>请输入密码</span></span>
-                            <!--<span class="glyphicon glyphicon-exclamation-sign checkinfo" ng-show="loginForm.kaptcha.$dirty && loginForm.kaptcha.$error.required"><span>请输入验证码</span></span>-->
+                            <span class="checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.required"><span>请输入邮箱</span></span>
+                            <span class="checkinfo" ng-show="loginForm.userName.$dirty && loginForm.userName.$error.email"><span>邮箱格式不正确</span></span>
+                            <span class="checkinfo" ng-show="loginForm.password.$dirty && loginForm.password.$error.required"><span>请输入密码</span></span>
                         </div>
-                        <span class="glyphicon glyphicon-exclamation-sign checkinfo pull-right" ng-show="loginInfo.loginerror"><span>{{loginInfo.loginerroinfo}}</span></span>
+                        <span class="checkinfo pull-right" ng-show="loginInfo.loginerror"><span>{{loginInfo.loginerroinfo}}</span></span>
                     </div>
                 </div>
             </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="login(loginForm.$valid)" >Login</button>
+                <button type="button" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="login(loginForm.$valid)" >Sign in</button>
                 <a class="btn btn-link" href="/forgot">？Forgot</a>
             </div>
         </div>

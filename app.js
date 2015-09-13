@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var template = require('./routes/template');
@@ -16,6 +17,7 @@ var register = require('./routes/register');
 var business = require('./routes/business');
 
 var settings = require('./settings');
+mongoose.connect(settings.mongodb_url);
 var options = {
   "host": settings.redis_host,
   "port": settings.redis_port,
@@ -37,7 +39,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   store: new RedisStore(options),
-  secret: 'funky soya'
+  secret: settings.app_secret_key
 }));
 
 app.use(function (req, res, next) {
