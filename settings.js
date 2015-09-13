@@ -12,9 +12,10 @@ module.exports = {
     redis_session_timeout : 60 * 60,   //Session的有效期为1小时
 
     mail_host : 'smtp.163.com',
+    mail_ssl : true,
     mail_port : '465',
-    mail_user : 'xiaoxue_jie@163.com',
-    mail_password : '211314123',
+    mail_user : 'xxxxxx@163.com',
+    mail_password : 'xxxxxx',
     mail_name : 'kakkoii',
     mail_redis_prefix : 'mail_forgot:',
     mail_expire : 60 * 5,

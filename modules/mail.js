@@ -16,7 +16,7 @@ exports.sendRestPWMail = function(user,token,callback){
     // 开启一个 SMTP 连接池
     var smtpTransport = nodemailer.createTransport("SMTP",{
         host: settings.mail_host, // 主机
-        secureConnection: true, // 使用 SSL
+        secureConnection: settings.mail_ssl, // 使用 SSL
         port: settings.mail_port, // SMTP 端口
         auth: {
             user: settings.mail_user,
