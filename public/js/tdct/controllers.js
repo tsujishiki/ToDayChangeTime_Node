@@ -8,9 +8,9 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
         $location.path('createBusiness');
     };
 }])
-.controller('RouteErrorCtl',function($scope,$http){
-
-})
+.controller('RouteErrorCtl',['$scope','errorMsg',function($scope,errorMsg){
+        $scope.errorMsg = errorMsg;
+}])
 .controller('RouteNewBusinessCtl',['$scope','BaseDataService','BusinessService',function($scope,BaseDataService,BusinessService){
     //游戏类型
     BaseDataService.getByType('gameType').then(function(data){
@@ -88,6 +88,35 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
         }
     };
 }])
+.controller('RouteRestPWCtl',['$scope','LoginService','$routeParams',function($scope,LoginService,$routeParams){
+    var token = $routeParams.token;
+    var info = {};
+    info.sending = true;
+    info.validSuccess = false;
+    info.error = false;
+    $scope.info = info;
+
+    LoginService.restValid(token).then(function(data){
+        data.sending = false;
+        $scope.info = data;
+    });
+
+    $scope.resetpw = function(isValid){
+        if(isValid) {
+            info.sending = true;
+            LoginService.resetpw($scope.form).then(function(data){
+                data.sending = false;
+                $scope.info = data;
+            })
+        }else{
+            angular.forEach($scope.retrieveForm,function(e){
+                if(typeof(e) == 'object' && typeof(e.$dirty) == 'boolean'){
+                    e.$dirty = true;
+                }
+            });
+        }
+    };
+}])
 .controller('RouteRegisterCtl',['$scope','RegisterService',function($scope,RegisterService){
     var user = {};
     $scope.user = user;
@@ -151,7 +180,7 @@ app.controller('RouteMainCtl',['$scope','$location',function($scope,$location){
 
     LoginService.autoLogin().then(function(data){
         //路由权限验证
-        $scope.$on('$routeChangeStart', function(scope, next, current) {
+        $rootScope.$on('$routeChangeStart', function(scope, next, current) {
             var needPermission = next.$$route.needPermission;
             if(needPermission && !LoginService.getLoginInfo().hasLogin){
                 $location.path('/login');

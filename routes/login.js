@@ -26,7 +26,7 @@ router.get('/autoLogin', function(req, res) {
                     returnBody.status = Constant.Status.FAILED;
                 }
             }else{
-                returnBody.status = Constant.Status.FAILED;
+                returnBody.status = Constant.Status.ERROR;
                 returnBody.data = error;
             }
             res.json(returnBody);
@@ -111,6 +111,33 @@ router.post('/retrieve',function(req, res){
             returnBody.msg = '邮箱填写不正确，无对应用户';
             res.json(returnBody);
         }
+    });
+});
+
+router.get('/resetValid/:token',function(req, res){
+    var token = req.params.token;
+    var returnBody = new ReturnBody();
+    try{
+        var link = System.decrypt(token,settings.app_secret_key);
+    }catch(err){
+        returnBody.status = Constant.Status.ERROR;
+        returnBody.msg = err.stack;
+        res.json(returnBody);
+        return ;
+    }
+
+    redis.get(settings.mail_redis_prefix + link.split('$')[1],function(err,data){
+        if(!err){
+            if(data != null){
+                returnBody.status = Constant.Status.SUCCESS;
+            }else{
+                returnBody.status = Constant.Status.INVALIDATE;
+            }
+        }else{
+            returnBody.status = Constant.Status.ERROR;
+            returnBody.msg = err;
+        }
+        res.json(returnBody);
     });
 });
 

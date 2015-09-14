@@ -8,15 +8,19 @@ var app = angular.module('mainApp', ['ngRoute'])
  * 全局变量
  */
 .value('deferMsg',{'msg':''})
+.value('errorMsg',{'msg':''})
+
 
 /*****
  * Interceptor
  */
-.factory('statusInterceptor', ['$q','$location','deferMsg',function($q,$location,deferMsg) {
+.factory('statusInterceptor', ['$q','$location','deferMsg','errorMsg',function($q,$location,deferMsg,errorMsg) {
     var statusInterceptor = {
         response: function(response) {
             var deferred = $q.defer();
             if(response.data.status == Status.ERROR){//系统错误
+                console.log(response.data.msg)
+                errorMsg.msg = response.data.msg;
                 $location.path('/error');
                 return deferred.promise;
             }else if(response.data.status == Status.DEFER_MESSAGE){//延时消息提示
@@ -57,6 +61,10 @@ var app = angular.module('mainApp', ['ngRoute'])
         .when('/forgot', {
             templateUrl: 'templates/forgot',
             controller: 'RouteForgotCtl'
+        })
+        .when('/reset_pw/:token', {
+            templateUrl: '/templates/resetPassword',
+            controller: 'RouteRestPWCtl'
         })
         .when('/error', {
             templateUrl: 'templates/error',
